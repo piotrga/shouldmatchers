@@ -16,8 +16,8 @@ public class MapShouldMatcher extends AbstractShouldMatcher<Map>{
         shouldBeEqual(expected);
     }
 
-    public void shouldBeEqual(Map compareTo) {
-        assertThat(differenceToString(acctual, compareTo), acctual, equalTo(compareTo));
+    public void shouldBeEqual(Map expected) {
+        assertThat(differenceToString(acctual, expected), acctual, equalTo(expected));
     }
 
     private Map flatListOfPairsToMap(Object[] mapValues) {

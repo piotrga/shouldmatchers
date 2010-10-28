@@ -3,7 +3,7 @@
 
 	<groupId>shouldmatchers</groupId>
 	<artifactId>shouldmatchers</artifactId>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<name>Should Matchers</name>
 	<packaging>jar</packaging>
 	<description>Should matchers similar to scalatest</description>

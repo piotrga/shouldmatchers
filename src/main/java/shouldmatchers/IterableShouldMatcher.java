@@ -18,10 +18,6 @@ public class IterableShouldMatcher extends AbstractShouldMatcher<Iterable>{
         assertThat(toArray(acctual, Object.class), equalTo(list));
     }
 
-    public void shouldBeEqual(Iterable compareTo) {
-        assertThat(this.acctual, equalTo(compareTo));
-    }
-
     public boolean shouldBeOrderedAccordingTo(Comparator comparator) {
         ShouldMatchers.the(acctual).shouldNotBeNull();
         Object[] acctual = toArray(this.acctual, Object.class);
@@ -29,7 +25,7 @@ public class IterableShouldMatcher extends AbstractShouldMatcher<Iterable>{
         sort(sorted, comparator);
 
         if (!Arrays.equals(sorted, acctual)){
-            fail("" + Arrays.toString(acctual) + " is not ordered according to " + comparator );
+            fail(Arrays.toString(acctual) + " is not ordered according to " + comparator );
         }
         return true;
     }
