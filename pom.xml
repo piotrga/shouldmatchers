@@ -7,7 +7,7 @@
 	<name>Should Matchers</name>
 	<packaging>jar</packaging>
 	<description>Should matchers similar to scalatest</description>
-	<url>http://code.google.com/p/shouldmatchers</url>
+	<url>http://github.com/piotrga/shouldmatchers</url>
 	<properties>
 		<inhouse.repository>${env.INHOUSE_REPOSITORY}</inhouse.repository>
 	</properties>
@@ -19,7 +19,7 @@
 		</license>
 	</licenses>
 	<scm>
-		<url>https://shouldmatchers.googlecode.com/svn/</url>
+		<url>http://github.com/piotrga/shouldmatchers</url>
 	</scm>
 
 	<dependencies>
