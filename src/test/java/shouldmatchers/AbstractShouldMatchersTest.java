@@ -29,5 +29,53 @@ public class AbstractShouldMatchersTest {
         Then("123").shouldNotBe(equalTo("789"));
     }
 
+    @Test
+    public void shouldThrow(){
+        TestClass1 object = new TestClass1();
+        the(object).shouldThrow(SomeDistinctException.class).when().someBuggyMethod();
+        the(object).shouldThrowWhen().someBuggyMethod();
+    }
+
+    @Test
+    public void shouldMatching(){
+        TestClass1 object = new TestClass1();
+        the(object).shouldThrowMatching("[0-9]+ is too big").when().someBuggyMethodWithMessage();
+    }
+
+    @Test(expected = AssertionError.class)
+    public void shouldThrowWhenExceptionDoesntMatch(){
+        TestClass1 object = new TestClass1();
+        the(object).shouldThrow(SomeOtherDistinctException.class).when().someBuggyMethod();
+        the(object).shouldThrowWhen().someBuggyMethod();
+    }
+
+    @Test(expected = AssertionError.class)
+    public void shouldThrowWhenNotThrows(){
+        TestClass1 object = new TestClass1();
+        the(object).shouldThrowWhen().someNOTBuggyMethod(8);
+    }
+
+    @Test(expected = AssertionError.class)
+    public void shouldThrowWhenNotThrowsForSpecificException(){
+        TestClass1 object = new TestClass1();
+        the(object).shouldThrow(SomeDistinctException.class).when().someNOTBuggyMethod(8);
+    }
+
+    static class SomeDistinctException extends RuntimeException{}
+    static class SomeOtherDistinctException extends RuntimeException{}
+
+    static class TestClass1{
+        public void someBuggyMethod(){
+            throw new SomeDistinctException();
+        }
+
+        public void someBuggyMethodWithMessage(){
+            throw new RuntimeException("The number 78 is too big");
+        }
+
+        public int someNOTBuggyMethod(int x){
+            return x+89;
+        }
+    }
 
 }
