@@ -83,7 +83,12 @@ public class AbstractShouldMatcher<T> {
         @SuppressWarnings({"unchecked"})
         public X when() {
             Enhancer e = new Enhancer();
-            e.setSuperclass(targetObject.getClass());
+            if (targetObject.getClass().isInterface()){
+                e.setInterfaces(new Class[]{targetObject.getClass()});
+            }else{
+                e.setSuperclass(targetObject.getClass());
+            }
+
             e.setCallback(new InvocationHandler() {
                 public Object invoke(Object o, Method method, Object[] args) throws Throwable {
                     try {
