@@ -5,6 +5,10 @@ import java.util.List;
 import static shouldmatchers.ShouldMatchers.the;
 
 public class Sugar {
+
+    /**
+     * Makes sure the list has only one element and returns it.
+     */
     public static <T> T onlyElementOf(List<T> list) {
         the(list).shouldHaveOneElementOnly();
         return list.get(0);
