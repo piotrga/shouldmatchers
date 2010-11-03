@@ -10,9 +10,9 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 @SuppressWarnings({"unchecked"})
-public class IterableShouldMatcher extends AbstractShouldMatcher<Iterable>{
+public class IterableShouldMatcher<T extends Iterable> extends AbstractShouldMatcher<T>{
 
-    public IterableShouldMatcher(Iterable acctual) { super(acctual); }
+    public IterableShouldMatcher(T acctual) { super(acctual); }
 
     public void shouldBeEqual(Object... list) {
         assertThat(toArray(acctual, Object.class), equalTo(list));

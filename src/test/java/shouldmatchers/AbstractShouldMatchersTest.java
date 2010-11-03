@@ -17,16 +17,18 @@ public class AbstractShouldMatchersTest {
 
     @Test(expected = AssertionError.class)
     public void notEqual() {
-        the((Object)1).shouldBeEqual(2);
+        Object solutionToThisProblem = 1;
+        the(solutionToThisProblem).shouldBeEqual(2);
+        the(solutionToThisProblem).shouldBe(2);
     }
 
     @Test
     public void shouldWithMatcher(){
-        the("123").shouldBe(equalTo("123"));
-        the("123").should(containsString("123"));
-        AbstractShouldMatchersTest o = new AbstractShouldMatchersTest();
-        the(o).shouldBe(equalTo(o));
-        Then("123").shouldNotBe(equalTo("789"));
+        String solution = "123";
+        the(solution).shouldBe(equalTo("123"));
+        the(solution).should(containsString("123"));
+        the(new TestClass1()).shouldBe(equalTo(new TestClass1()));
+        Then(solution).shouldNotBe(equalTo("789"));
     }
 
     @Test
@@ -37,7 +39,7 @@ public class AbstractShouldMatchersTest {
     }
 
     @Test
-    public void shouldMatching(){
+    public void shouldThrowMatching(){
         TestClass1 object = new TestClass1();
         the(object).shouldThrowMatching("[0-9]+ is too big").when().someBuggyMethodWithMessage();
     }

@@ -25,6 +25,8 @@ public class AbstractShouldMatcher<T> {
         assertThat(acctual, equalTo(expected));
     }
 
+    public void shouldBe(Object expected) { shouldBeEqual(expected); }
+
     public void shouldNotBeNull() {
         assertNotNull(acctual);
     }
@@ -54,6 +56,10 @@ public class AbstractShouldMatcher<T> {
         });
     }
 
+    /**
+     * Checks if the method throws exception with message matching the regex.
+     * @param regex - regular expression. It is internally wrapped: ".*" + regex + ".*"
+     */
     public ShouldThrow<T> shouldThrowMatching(final String regex) {
         return new ShouldThrow<T>(acctual, new ExceptionMessageMatchesRegex(regex));
 
