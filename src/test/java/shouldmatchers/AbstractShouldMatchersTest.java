@@ -27,7 +27,8 @@ public class AbstractShouldMatchersTest {
         String solution = "123";
         the(solution).shouldBe(equalTo("123"));
         the(solution).should(containsString("123"));
-        the(new TestClass1()).shouldBe(equalTo(new TestClass1()));
+        TestClass1 someClassOtherThanString = new TestClass1();
+        the(someClassOtherThanString).shouldBe(equalTo(someClassOtherThanString));
         Then(solution).shouldNotBe(equalTo("789"));
     }
 
