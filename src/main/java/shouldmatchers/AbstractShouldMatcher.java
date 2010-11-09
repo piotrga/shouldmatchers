@@ -57,6 +57,10 @@ public class AbstractShouldMatcher<T> {
         });
     }
 
+    public ShouldThrow<T> shouldThrow(Throwable throwable) {
+        return new ShouldThrow<T>(acctual, Matchers.equalTo(throwable));
+    }
+
     /**
      * Checks if the method throws exception with message matching the regex.
      * @param regex - regular expression. It is internally wrapped: ".*" + regex + ".*"
@@ -83,7 +87,7 @@ public class AbstractShouldMatcher<T> {
         @SuppressWarnings({"unchecked"})
         public X when() {
             Enhancer e = new Enhancer();
-            if (targetObject.getClass().isInterface()){
+            if (targetObject.getClass().isInterface()){// this is silly and never happens...
                 e.setInterfaces(new Class[]{targetObject.getClass()});
             }else{
                 e.setSuperclass(targetObject.getClass());

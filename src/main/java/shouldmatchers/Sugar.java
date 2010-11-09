@@ -9,6 +9,10 @@ public class Sugar {
     /**
      * Makes sure the list has only one element and returns it.
      */
+    public static <T> T onlyElementOf(T[] array) {
+        the(array.length).shouldBe(1);
+        return array[0];
+    }
     public static <T> T onlyElementOf(List<T> list) {
         the(list).shouldHaveOneElementOnly();
         return list.get(0);
