@@ -1,0 +1,23 @@
+To use shouldmatchers with maven you need to add repository to your pom or settings file
+
+<repository>
+    <name>piotrga</piotrga>
+    <url>http://piotrga.github.com/maven-repo</url>
+</repository>
+
+You also need to add the dependency:
+
+<dependency>
+    <groupId>closures</groupId>
+    <artifactId>closures</artifactId>
+    <version>1.0.10</version> // please set the version to the one you want to use
+</dependency>
+
+Jar can be downloaded from:
+http://piotrga.github.com/maven-repo/closures/closures/{version}/closures-{version}.jar
+
+ie.
+http://piotrga.github.com/maven-repo/closures/closures/1.0.10/closures-1.0.10.jar
+
+
+You can contact me at (piotrga at gmail.com)
