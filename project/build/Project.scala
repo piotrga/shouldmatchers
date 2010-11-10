@@ -8,6 +8,4 @@ class Should(info: ProjectInfo) extends DefaultProject(info)
   val guava = "com.google.guava" % "guava" % "r06"
   val cglib = "cglib" % "cglib-full" % "2.0.2"
   val junit = "junit" % "junit" % "4.8.1"
-  
-  //override def testFrameworks = super.testFrameworks ++ List(new TestFramework("com.novocode.junit.JUnitFrameworkNoMarker")) 
 }
