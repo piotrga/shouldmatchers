@@ -1,10 +1,24 @@
 package shouldmatchers;
 
+import java.util.Iterator;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static shouldmatchers.ShouldMatchers.the;
 
 public class Sugar {
+
+    /**
+     * Makes sure the array has only one element and returns it.
+     */
+    public static <T> T onlyElementOf(Iterable<T> iterable) {
+        Iterator<T> iterator = iterable.iterator();
+        assertTrue(iterable + " should have exactly one element but it's empty.", iterator.hasNext());
+        T value = iterator.next();
+        assertFalse(iterable + " should have exactly one element but has more elements.", iterator.hasNext());
+        return value;
+    }
 
     /**
      * Makes sure the array has only one element and returns it.
