@@ -3,7 +3,7 @@
 
     <groupId>shouldmatchers</groupId>
     <artifactId>shouldmatchers</artifactId>
-    <version>1.0.11</version>
+    <version>1.0.12-SNAPSHOT</version>
     <name>Should Matchers</name>
     <packaging>jar</packaging>
     <description>Should matchers similar to scalatest</description>
@@ -45,7 +45,13 @@
             <version>4.5</version>
             <scope>provided</scope>
         </dependency>
-        
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>1.6</version>
+            <scope>provided</scope>
+        </dependency>
+
     </dependencies>
     <build>
         <pluginManagement>

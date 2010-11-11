@@ -1,5 +1,7 @@
 package shouldmatchers;
 
+import org.joda.time.ReadableInstant;
+
 import java.util.Collection;
 import java.util.Map;
 
@@ -32,5 +34,7 @@ public class ShouldMatchers {
 
     public static <T> AbstractShouldMatcher<T> the(T acctual ){ return new AbstractShouldMatcher<T>(acctual); }
     public static <T> AbstractShouldMatcher<T> Then(T acctual ){ return the(acctual); }
+
+    public static JodaDateMatcher the(ReadableInstant acctual){ return new JodaDateMatcher(acctual); }
 
 }
