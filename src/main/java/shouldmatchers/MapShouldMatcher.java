@@ -41,7 +41,7 @@ public class MapShouldMatcher extends AbstractShouldMatcher<Map>{
         for (Object k : m1.keySet()) {
             if (!m2.containsKey(k)) {
                 buf.append("M2 does not contain " + k + "\n");
-            }else if (!m2.get(k).equals(m1.get(k))) {
+            }else if (! m2.get(k).equals(m1.get(k))) {
                 buf.append( String.format("m1(%s)=%s,%s != m2(%s)=%s,%s\n", k, m1.get(k), m1.get(k).getClass(), k, m2.get(k), m2.get(k).getClass()));
             }
         }
