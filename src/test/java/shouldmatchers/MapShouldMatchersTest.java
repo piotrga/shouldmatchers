@@ -3,7 +3,6 @@ package shouldmatchers;
 import org.junit.Test;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import static shouldmatchers.ShouldMatchers.the;
 
@@ -34,4 +33,5 @@ public class MapShouldMatchersTest {
     public void equalsThrowsWhenNotEqual2(){
         the(new HashMap()).shouldBeEqual(map);
     }
+
 }

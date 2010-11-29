@@ -79,18 +79,18 @@ public class AbstractShouldMatcher<T> {
 
     @SuppressWarnings({"CaughtExceptionImmediatelyRethrown"})
     public static class ShouldThrow<X> {
-          private static final NamingPolicy NAMING_POLICY_THAT_ALLOWS_IMPOSTERISATION_OF_CLASSES_IN_SIGNED_PACKAGES = new DefaultNamingPolicy() {
-        @Override
-        public String getClassName(String prefix, String source, Object key, Predicate names) {
-            return "org.jmock.codegen." + super.getClassName(prefix, source, key, names);
-        }
-    };
+        private static final NamingPolicy NAMING_POLICY_THAT_ALLOWS_IMPOSTERISATION_OF_CLASSES_IN_SIGNED_PACKAGES = new DefaultNamingPolicy() {
+            @Override
+            public String getClassName(String prefix, String source, Object key, Predicate names) {
+                return "shouldmatchers.codegen." + super.getClassName(prefix, source, key, names);
+            }
+        };
 
-    private static final CallbackFilter IGNORE_BRIDGE_METHODS = new CallbackFilter() {
-        public int accept(Method method) {
-            return method.isBridge() ? 1 : 0;
-        }
-    };
+        private static final CallbackFilter IGNORE_BRIDGE_METHODS = new CallbackFilter() {
+            public int accept(Method method) {
+                return method.isBridge() ? 1 : 0;
+            }
+        };
         private final X targetObject;
         private final Matcher<Throwable> matcher;
 

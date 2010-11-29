@@ -1,10 +1,12 @@
 package shouldmatchers;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.*;
 import static shouldmatchers.ShouldMatchers.the;
 
 public class Sugar {
@@ -43,5 +45,14 @@ public class Sugar {
     private static <T> T nthElementOf(List<T> list, int index) {
         the(list.size()).shouldBeAtLeast(index);
         return list.get(index - 1);
+    }
+
+    static Map map(Object... mapValues) {
+        assertThat(mapValues.length % 2, equalTo(0));
+        Map res = new HashMap();
+        for(int i = 0; i < mapValues.length/2; i++){
+            res.put(mapValues[i*2], mapValues[i*2+1]);
+        }
+        return res;
     }
 }
