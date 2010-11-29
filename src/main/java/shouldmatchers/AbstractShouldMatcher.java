@@ -1,11 +1,14 @@
 package shouldmatchers;
 
-import net.sf.cglib.proxy.Enhancer;
-import net.sf.cglib.proxy.InvocationHandler;
+import net.sf.cglib.core.DefaultNamingPolicy;
+import net.sf.cglib.core.NamingPolicy;
+import net.sf.cglib.core.Predicate;
+import net.sf.cglib.proxy.*;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
+import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -76,6 +79,18 @@ public class AbstractShouldMatcher<T> {
 
     @SuppressWarnings({"CaughtExceptionImmediatelyRethrown"})
     public static class ShouldThrow<X> {
+          private static final NamingPolicy NAMING_POLICY_THAT_ALLOWS_IMPOSTERISATION_OF_CLASSES_IN_SIGNED_PACKAGES = new DefaultNamingPolicy() {
+        @Override
+        public String getClassName(String prefix, String source, Object key, Predicate names) {
+            return "org.jmock.codegen." + super.getClassName(prefix, source, key, names);
+        }
+    };
+
+    private static final CallbackFilter IGNORE_BRIDGE_METHODS = new CallbackFilter() {
+        public int accept(Method method) {
+            return method.isBridge() ? 1 : 0;
+        }
+    };
         private final X targetObject;
         private final Matcher<Throwable> matcher;
 
@@ -86,29 +101,40 @@ public class AbstractShouldMatcher<T> {
 
         @SuppressWarnings({"unchecked"})
         public X when() {
-            Enhancer e = new Enhancer();
-            if (targetObject.getClass().isInterface()){// this is silly and never happens...
-                e.setInterfaces(new Class[]{targetObject.getClass()});
-            }else{
-                e.setSuperclass(targetObject.getClass());
+            Enhancer enhancer = new Enhancer();
+            enhancer.setUseFactory(true);
+            Class<? extends Object> targetClass = targetObject.getClass();
+            enhancer.setSuperclass(targetClass);
+            enhancer.setCallbackTypes(new Class[]{InvocationHandler.class, NoOp.class});
+            enhancer.setCallbackFilter(IGNORE_BRIDGE_METHODS);
+            if (targetClass.getSigners() != null) {
+                enhancer.setNamingPolicy(NAMING_POLICY_THAT_ALLOWS_IMPOSTERISATION_OF_CLASSES_IN_SIGNED_PACKAGES);
             }
 
-            e.setCallback(new InvocationHandler() {
-                public Object invoke(Object o, Method method, Object[] args) throws Throwable {
-                    try {
-                        method.invoke(targetObject, args);
-                    }
-                    catch (IllegalAccessException rethrown) { throw rethrown; }
-                    catch (IllegalArgumentException rethrown) { throw rethrown; }
-                    catch (InvocationTargetException e) {
-                        assertThat(e.getCause(), matcher);
-                        return null;
-                    }
-                    fail("Should throw exception");
-                    return null;
-                }
+
+            Class clazz = enhancer.createClass();
+            Factory proxy = (Factory) new ObjenesisStd().newInstance(clazz);
+            proxy.setCallbacks(new Callback[]{
+                    new InvocationHandler() {
+                        public Object invoke(Object o, Method method, Object[] args) throws Throwable {
+                            try {
+                                method.invoke(targetObject, args);
+                            } catch (IllegalAccessException rethrown) {
+                                throw rethrown;
+                            } catch (IllegalArgumentException rethrown) {
+                                throw rethrown;
+                            } catch (InvocationTargetException e) {
+                                assertThat(e.getCause(), matcher);
+                                return null;
+                            }
+                            fail("Should throw exception");
+                            return null;
+                        }
+                    }, NoOp.INSTANCE
+
             });
-            return (X) e.create();
+
+            return (X) proxy;
         }
     }
 
