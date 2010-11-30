@@ -2,6 +2,8 @@ package shouldmatchers;
 
 import java.util.Collection;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 import static shouldmatchers.ShouldMatchers.the;
 
 public class CollectionShouldMatcher<E> extends IterableShouldMatcher<Collection<E>>{
@@ -10,6 +12,6 @@ public class CollectionShouldMatcher<E> extends IterableShouldMatcher<Collection
     }
 
     public void shouldHaveOneElementOnly() {
-        the(acctual.size()).shouldBe(1);
+        assertThat(acctual +" should have only one element", acctual.size(), equalTo(1));
     }
 }
