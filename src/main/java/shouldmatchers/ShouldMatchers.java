@@ -32,9 +32,14 @@ public class ShouldMatchers {
     public static  void assertThe(Boolean acctual ){ assertThat(acctual, is(true)); }
     public static  void the(Boolean acctual ){ assertThe(acctual); }
 
+
+
     public static <T> AbstractShouldMatcher<T> the(T acctual ){ return new AbstractShouldMatcher<T>(acctual); }
     public static <T> AbstractShouldMatcher<T> Then(T acctual ){ return the(acctual); }
 
     public static JodaDateMatcher the(ReadableInstant acctual){ return new JodaDateMatcher(acctual); }
 
+    static <T extends AbstractShouldMatcher<F>, F>  T shouldFailAssertion(T matcher) {
+        return the(matcher).shouldThrow(AssertionError.class).when();
+    }
 }

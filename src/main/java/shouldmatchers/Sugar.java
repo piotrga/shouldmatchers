@@ -12,7 +12,7 @@ import static shouldmatchers.ShouldMatchers.the;
 public class Sugar {
 
     /**
-     * Makes sure the array has only one element and returns it.
+     * Makes sure the iterable has only one element and returns it.
      */
     public static <T> T onlyElementOf(Iterable<T> iterable) {
         Iterator<T> iterator = iterable.iterator();
@@ -47,6 +47,7 @@ public class Sugar {
         return list.get(index - 1);
     }
 
+    @SuppressWarnings({"unchecked"})
     static Map map(Object... mapValues) {
         assertThat(mapValues.length % 2, equalTo(0));
         Map res = new HashMap();

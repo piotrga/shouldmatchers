@@ -4,10 +4,9 @@ import net.sf.cglib.core.DefaultNamingPolicy;
 import net.sf.cglib.core.NamingPolicy;
 import net.sf.cglib.core.Predicate;
 import net.sf.cglib.proxy.*;
-import org.hamcrest.BaseMatcher;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
+import net.sf.cglib.proxy.Factory;
+import org.hamcrest.*;
+import org.junit.Assert;
 import org.objenesis.ObjenesisStd;
 
 import java.lang.reflect.InvocationTargetException;
@@ -73,6 +72,13 @@ public class AbstractShouldMatcher<T> {
 
     }
 
+    T failsAssertion() {
+        return shouldThrow(AssertionError.class).when();
+    }
+
+    public T shouldThrowWhenCalling() {
+        return shouldThrowWhen();
+    }
     public T shouldThrowWhen() {
         return new ShouldThrow<T>(acctual, Matchers.<Throwable>anything()).when();
     }
@@ -97,6 +103,10 @@ public class AbstractShouldMatcher<T> {
         public ShouldThrow(X targetObject, Matcher<Throwable> matcher) {
             this.targetObject = targetObject;
             this.matcher = matcher;
+        }
+
+        public X whenCalling() {
+            return when();
         }
 
         @SuppressWarnings({"unchecked"})
@@ -127,7 +137,7 @@ public class AbstractShouldMatcher<T> {
                                 assertThat(e.getCause(), matcher);
                                 return null;
                             }
-                            fail("Should throw exception");
+                            fail();
                             return null;
                         }
                     }, NoOp.INSTANCE
@@ -135,6 +145,12 @@ public class AbstractShouldMatcher<T> {
             });
 
             return (X) proxy;
+        }
+
+        private void fail() {
+            StringDescription stringDescription = new StringDescription();
+            matcher.describeTo(stringDescription);
+            Assert.fail("Should throw exception " + stringDescription.toString());
         }
     }
 
