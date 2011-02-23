@@ -30,6 +30,14 @@ public class AbstractShouldMatcher<T> {
     public void shouldBe(Object expected) { shouldBeEqual(expected); }
     public void shouldBeEqualTo(Object expected) { shouldBeEqual(expected); }
 
+    public void shouldNotBeEqual(Object expected) {
+        assertThat(acctual, not(equalTo(expected)));
+    }
+
+    public void shouldNotBe(Object expected) { shouldNotBeEqual(expected); }
+    public void shouldNotBeEqualTo(Object expected) { shouldNotBeEqual(expected); }
+
+
     public void shouldNotBeNull() {
         assertNotNull(acctual);
     }

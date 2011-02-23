@@ -22,6 +22,17 @@ public class AbstractShouldMatchersTest {
         the(solutionToThisProblem).shouldBe(2);
     }
 
+    @Test()
+    public void shoulNotEqual() {
+        Object one = 1;
+
+        the(one).shouldNotBe(2);
+        the(the(one)).failsAssertion().shouldNotBe(1);
+
+        the(one).shouldNotBeEqual(2);
+        the(one).shouldNotBeEqualTo(2);
+    }
+
     @Test
     public void shouldWithMatcher(){
         String solution = "123";
@@ -48,8 +59,8 @@ public class AbstractShouldMatchersTest {
     @Test(expected = AssertionError.class)
     public void shouldThrowWhenExceptionDoesntMatch(){
         TestClass1 object = new TestClass1(2);
-        the(object).shouldThrow(SomeOtherDistinctException.class).when().someBuggyMethod();
         the(object).shouldThrowWhen().someBuggyMethod();
+        the(object).shouldThrow(SomeOtherDistinctException.class).when().someBuggyMethod();
     }
 
     @Test(expected = AssertionError.class)
